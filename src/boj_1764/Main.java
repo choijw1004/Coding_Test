@@ -1,47 +1,48 @@
 package boj_1764;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int N = sc.nextInt();
-		int M = sc.nextInt();
+		String[] input = br.readLine().split(" ");
+		int N = Integer.parseInt(input[0]);
+		int M = Integer.parseInt(input[1]);
 
-		String[] noD = new String[N];
+		ArrayList<String> noD = new ArrayList<>();
+		ArrayList<String> noH = new ArrayList<>();
 
 		for (int i = 0; i < N; i++) {
-			noD[i] = sc.next();
+			noD.add(br.readLine());
 		}
 
-		String[] noH = new String[M];
+		Collections.sort(noD);
 
 		for (int i = 0; i < M; i++) {
-			noH[i] = sc.next();
+			noH.add(br.readLine());
 		}
 
-		List<String> targetArr = new ArrayList<>();
+		Collections.sort(noH);
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (noD[i].equals(noH[j])) {
-					targetArr.add(noD[i]);
-				}
+		ArrayList<String> targetArr = new ArrayList<>();
+
+		for (String s : noD) {
+			if (Collections.binarySearch(noH, s) >= 0) {
+				targetArr.add(s);
 			}
 		}
 
 		Collections.sort(targetArr);
-		
+
 		System.out.println(targetArr.size());
-		for (int i = 0; i < targetArr.size(); i++) {
-			System.out.println(targetArr.get(i));
+		for (String s : targetArr) {
+			System.out.println(s);
 		}
-
 	}
-
 }
