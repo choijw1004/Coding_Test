@@ -1,35 +1,44 @@
 package boj_1620;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+    public static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
-		int N = sc.nextInt();
-		int M = sc.nextInt();
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-		List<String> name = new ArrayList<>();
+        int N = sc.nextInt();
+        int M = sc.nextInt();
 
-		for (int i = 0; i < N; i++) {
-			name.add(sc.next());
-		}
+        HashMap<String, Integer> pocketMon = new HashMap<>();
 
-		for (int i = 0; i < M; i++) {
-			String s = sc.next();
-			if (Character.isDigit(s.charAt(0))) {
-				System.out.println(name.get(Integer.parseInt(s) - 1));
-			} else {
-				for (int j = 0; j < N; j++) {
-					if (name.get(j).equals(s)) {
-						System.out.println(j + 1);
-						break;
-					}
-				}
-			}
-		}
-	}
+        for (int i = 1; i <= N; i++) {
+            pocketMon.put(sc.next(), i);
+        }
+
+        for (int i = 0; i < M; i++) {
+            String str = sc.next();
+
+            if (isInteger(str)) {
+                int num = Integer.parseInt(str);
+                for (String key : pocketMon.keySet()) {
+                    if (pocketMon.get(key) == num) {
+                        System.out.println(key);
+                        break;
+                    }
+                }
+            } else {
+                System.out.println(pocketMon.get(str));
+            }
+        }
+    }
 }
