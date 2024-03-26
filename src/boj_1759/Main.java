@@ -32,8 +32,7 @@ public class Main {
 		return true;
 	}
 
-	// && alphaCheck(result) == true
-	public static void permutation(char[] arr, char[] result, boolean[] visited, int depth, int r) {
+	public static void comb(char[] arr, char[] result, boolean[] visited, int start, int depth, int r) {
 		if (depth == r) {
 			if (check(result) == true && alphaCheck(result) == true) {
 				for (char x : result) {
@@ -46,16 +45,14 @@ public class Main {
 			}
 
 		}
-
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = start; i < arr.length; i++) {
 			if (!visited[i]) {
 				visited[i] = true;
 				result[depth] = arr[i];
-				permutation(arr, result, visited, depth + 1, r);
+				comb(arr, result, visited, i + 1, depth + 1, r);
 				visited[i] = false;
 			}
 		}
-
 	}
 
 	public static void main(String[] args) {
@@ -71,7 +68,8 @@ public class Main {
 		}
 
 		Arrays.sort(chars);
-		permutation(chars, new char[N], visited, 0, N);
+		comb(chars, new char[N], visited, 0, 0, N);
+//		permutation(chars, new char[N], visited, 0, N);
 
 		System.out.println(sb);
 	}
