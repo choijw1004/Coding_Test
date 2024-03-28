@@ -1,84 +1,86 @@
 package boj_21924;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Main {
 
-	static int[][] graph;
-	static int V, E;
-	static int[] parent;
-	static int finalCost;
+	static final int INF = Integer.MAX_VALUE;
 
-	// union
+	static class Edge implements Comparable<Edge> {
+		int st, ed, w;
 
-	static int find(int x) {
-		while (x != parent[x]) {
-			x = parent[x];
+		public Edge(int st, int ed, int w) {
+			this.st = st;
+			this.ed = ed;
+			this.w = w;
 		}
-		return x;
-	}
 
-	static void union(int a, int b) {
-		a = find(a);
-		b = find(b);
-
-		if (a != b) {
-			parent[b] = a;
+		@Override
+		public int compareTo(Edge o) {
+			return Integer.compare(this.w, o.w);
 		}
 	}
 
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-
 		int V = sc.nextInt();
 		int E = sc.nextInt();
 
-		parent = new int[V];
-
-		graph = new int[E][3];
-
-		for (int i = 0; i < E; i++) {
-			graph[i][0] = sc.nextInt();
-			graph[i][1] = sc.nextInt();
-			graph[i][2] = sc.nextInt();
-		}
-
-		Arrays.sort(graph, (o1, o2) -> Integer.compare(o1[2], o2[2]));
+		List<Edge>[] adjList = new ArrayList[V];
 
 		for (int i = 0; i < V; i++) {
-			parent[i] = i;
+			adjList[i] = new ArrayList<>();
 		}
 
+		long totalSum = 0;
 		for (int i = 0; i < E; i++) {
-			if (find(graph[i][0] - 1) != find(graph[i][1] - 1)) {
-				union(graph[i][0] - 1, graph[i][1] - 1);
-				finalCost += graph[i][2];
+			int A = sc.nextInt();
+			int B = sc.nextInt();
+			int W = sc.nextInt();
+
+			totalSum += W;
+
+			adjList[A - 1].add(new Edge(A - 1, B - 1, W)); // 정점 번호를 0부터 시작하도록 수정
+			adjList[B - 1].add(new Edge(B - 1, A - 1, W)); // 정점 번호를 0부터 시작하도록 수정
+		}
+
+		boolean[] visited = new boolean[V];
+
+		PriorityQueue<Edge> pq = new PriorityQueue<>();
+
+		visited[0] = true;
+
+		for (Edge e : adjList[0]) {
+			pq.add(e);
+		}
+
+		int pick = 1;
+		long ans = 0;
+
+		while (!pq.isEmpty()) {
+			Edge e = pq.poll();
+			if (visited[e.ed])
 				continue;
+
+			ans += e.w;
+			visited[e.ed] = true;
+			pick++;
+
+			for (Edge next : adjList[e.ed]) {
+				if (!visited[next.ed]) {
+					pq.add(next);
+				}
 			}
 		}
-		int checkSum = 0;
-		for (int i = 0; i < E; i++) {
-			checkSum += graph[i][2];
+
+		if (pick != V) {
+			System.out.println(-1); // 모든 정점이 연결되어 있지 않은 경우
+		} else {
+			System.out.println(totalSum - ans);
 		}
-
-		List<Integer> checkArr = new ArrayList<>();
-
-		for (int i = 0; i < V; i++) {
-			if (checkArr.contains(find(i) + 1)) {
-				continue;
-			} else
-				checkArr.add(find(i) + 1);
-		}
-
-		if (checkArr.size() >= 1) {
-			System.out.println(-1);
-		} else
-			System.out.println(checkSum - finalCost);
-
 	}
-
 }
