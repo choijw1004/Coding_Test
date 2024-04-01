@@ -10,10 +10,10 @@ public class Main {
 	public static void comb(int[] arr, int[] result, boolean[] visited, int start, int depth, int r) {
 		if (depth == r) {
 			System.out.println(Arrays.toString(result));
-
+			System.out.println(arrLength(result));
+			
 			if (isChecked(result) && arrLength(result) >= maxLength) {
 				maxLength = result.length;
-				System.out.println(Arrays.toString(result));
 			}
 			return;
 		}
@@ -26,6 +26,7 @@ public class Main {
 				visited[i] = false;
 			}
 		}
+		
 
 	}
 
