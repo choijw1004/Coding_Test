@@ -2,18 +2,6 @@ package boj_11047;
 
 import java.util.Scanner;
 
-//4200 target
-
-//1	i
-//5
-//10
-//50
-//100
-//500
-//1000
-//5000
-//10000
-//50000 i
 public class Main {
 
 	public static void main(String[] args) {
@@ -24,7 +12,7 @@ public class Main {
 		int target = sc.nextInt();
 
 		int[] coins = new int[N];
-
+ 
 		for (int i = 0; i < N; i++) {
 			coins[i] = sc.nextInt();
 		}
