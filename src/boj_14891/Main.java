@@ -1,6 +1,6 @@
 package boj_14891;
 
-import java.util.LinkedList;	
+import java.util.LinkedList;
 import java.util.Scanner;
 
 //10101111
@@ -87,11 +87,9 @@ public class Main {
 				} else if (w2.get(6) == w1.get(2) && w2.get(2) != w3.get(6)) {
 					if (w3.get(2) == w4.get(6)) {
 						wise(w2, direction);
-						wise(w1, -direction);
 						wise(w3, -direction);
 					} else {
 						wise(w2, direction);
-						wise(w1, -direction);
 						wise(w3, -direction);
 						wise(w4, direction);
 					}
@@ -160,17 +158,14 @@ public class Main {
 
 				}
 			}
+
 		}
-		System.out.println(w1);
-		System.out.println(w2);
-		System.out.println(w3);
-		System.out.println(w4);
 
 		int sum = 0;
-		sum += w1.get(2) * 1;
-		sum += w2.get(2) * 2;
-		sum += w3.get(2) * 4;
-		sum += w4.get(2) * 8;
+		sum += w1.get(0) * 1;
+		sum += w2.get(0) * 2;
+		sum += w3.get(0) * 4;
+		sum += w4.get(0) * 8;
 
 		System.out.println(sum);
 	}

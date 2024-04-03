@@ -3,6 +3,7 @@ package boj_5639;
 import java.util.Scanner;
 
 public class Main {
+	static int input;
 
 	static class Node {
 		int key;
@@ -47,7 +48,6 @@ public class Main {
 
 		Node root = tree.root;
 
-		int input;
 
 		while (sc.hasNext()) {
 			input = sc.nextInt();

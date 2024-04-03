@@ -7,66 +7,39 @@ public class Main {
 
 	static int maxLength;
 
-	public static void comb(int[] arr, int[] result, boolean[] visited, int start, int depth, int r) {
-		if (depth == r) {
-			System.out.println(Arrays.toString(result));
-			System.out.println(arrLength(result));
-			
-			if (isChecked(result) && arrLength(result) >= maxLength) {
-				maxLength = result.length;
-			}
-			return;
-		}
-
-		for (int i = start; i < arr.length; i++) {
-			if (!visited[i]) {
-				visited[i] = true;
-				result[depth] = arr[i];
-				comb(arr, result, visited, i + 1, depth + 1, r);
-				visited[i] = false;
-			}
-		}
-		
-
-	}
-
-	public static boolean isChecked(int[] result) {
-		boolean checkFlag = true;
-		for (int i = result.length - 1; i >= 1; i--) {
-			if (result[i] == 0) {
-				continue;
-			}
-			if (result[i - 1] > result[i]) {
-				checkFlag = false;
-			}
-		}
-		return checkFlag;
-	}
-
-	public static int arrLength(int[] arr) {
-		int cnt = 0;
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] == 0) {
-				continue;
-			} else
-				cnt++;
-		}
-		return cnt;
-	}
-
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		int[] nums = new int[N];
+		int[] nums = new int[N + 1];
 
-		maxLength = -1;
-		for (int i = 0; i < N; i++) {
+		for (int i = 1; i < N + 1; i++) {
 			nums[i] = sc.nextInt();
 		}
-		boolean[] visited = new boolean[N];
 
-		for (int i = 1; i <= N; i++) {
-			comb(nums, new int[N], visited, 0, 0, i);
+		int[] D = new int[N + 1];
+
+		Arrays.fill(D, 1);
+		D[0] = 0;
+
+		for (int i = 2; i < N + 1; i++) {
+			maxLength = 0;
+			for (int j = i; j >= 1; j--) {
+				if (nums[i] > nums[j]) {
+					if (D[j] > maxLength) {
+						maxLength = D[j];
+					}
+				}
+			}
+			D[i] += maxLength;
 		}
+
+		int sol = -1;
+		for (int i = 0; i < D.length; i++) {
+			if (D[i] > sol) {
+				sol = D[i];
+			}
+		}
+		System.out.println(sol);
+
 	}
 }
