@@ -26,147 +26,172 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
-		LinkedList<Integer> w1 = new LinkedList<Integer>();
-		String str = sc.nextLine();
-		for (int i = 0; i < 8; i++) {
-			w1.add(str.charAt(i) - '0');
-		}
+		int T = sc.nextInt();
+		int tc = 1;
 
-		LinkedList<Integer> w2 = new LinkedList<Integer>();
-		String str2 = sc.nextLine();
-		for (int i = 0; i < 8; i++) {
-			w2.add(str2.charAt(i) - '0');
-		}
-		LinkedList<Integer> w3 = new LinkedList<Integer>();
-		String str3 = sc.nextLine();
-		for (int i = 0; i < 8; i++) {
-			w3.add(str3.charAt(i) - '0');
-		}
-		LinkedList<Integer> w4 = new LinkedList<Integer>();
-		String str4 = sc.nextLine();
-		for (int i = 0; i < 8; i++) {
-			w4.add(str4.charAt(i) - '0');
-		}
+		while (T-- > 0) {
 
-		int tryCnt = sc.nextInt();
+//			LinkedList<Integer> w1 = new LinkedList<Integer>();
+//			String str = sc.nextLine();
+//			for (int i = 0; i < 8; i++) {
+//				w1.add(str.charAt(i) - '0');
+//			}
+//
+//			LinkedList<Integer> w2 = new LinkedList<Integer>();
+//			String str2 = sc.nextLine();
+//			for (int i = 0; i < 8; i++) {
+//				w2.add(str2.charAt(i) - '0');
+//			}
+//			LinkedList<Integer> w3 = new LinkedList<Integer>();
+//			String str3 = sc.nextLine();
+//			for (int i = 0; i < 8; i++) {
+//				w3.add(str3.charAt(i) - '0');
+//			}
+//			LinkedList<Integer> w4 = new LinkedList<Integer>();
+//			String str4 = sc.nextLine();
+//			for (int i = 0; i < 8; i++) {
+//				w4.add(str4.charAt(i) - '0');
+//			}
+			int tryCnt = sc.nextInt();
 
-		for (int i = 0; i < tryCnt; i++) {
-			int target = sc.nextInt();
-			int direction = sc.nextInt();
+			LinkedList<Integer> w1 = new LinkedList<Integer>();
+			for (int i = 0; i < 8; i++) {
+				w1.add(sc.nextInt());
+			}
+			LinkedList<Integer> w2 = new LinkedList<Integer>();
+			for (int i = 0; i < 8; i++) {
+				w2.add(sc.nextInt());
+			}
+			LinkedList<Integer> w3 = new LinkedList<Integer>();
+			for (int i = 0; i < 8; i++) {
+				w3.add(sc.nextInt());
+			}
 
-			if (target == 1) {
-				if (w1.get(2) == w2.get(6)) {
-					wise(w1, direction);
-				} else {
-					if (w2.get(2) == w3.get(6)) {
+			LinkedList<Integer> w4 = new LinkedList<Integer>();
+			for (int i = 0; i < 8; i++) {
+				w4.add(sc.nextInt());
+			}
+
+			for (int i = 0; i < tryCnt; i++) {
+				int target = sc.nextInt();
+				int direction = sc.nextInt();
+
+				if (target == 1) {
+					if (w1.get(2) == w2.get(6)) {
 						wise(w1, direction);
-						wise(w2, -direction);
 					} else {
+						if (w2.get(2) == w3.get(6)) {
+							wise(w1, direction);
+							wise(w2, -direction);
+						} else {
+							if (w3.get(2) == w4.get(6)) {
+								wise(w1, direction);
+								wise(w2, -direction);
+								wise(w3, direction);
+							} else {
+								wise(w1, direction);
+								wise(w2, -direction);
+								wise(w3, direction);
+								wise(w4, -direction);
+							}
+
+						}
+
+					}
+				}
+
+				else if (target == 2) {
+					if (w2.get(6) == w1.get(2) && w2.get(2) == w3.get(6)) {
+						wise(w2, direction);
+					} else if (w2.get(6) != w1.get(2) && w2.get(2) == w3.get(6)) {
+						wise(w2, direction);
+						wise(w1, -direction);
+					} else if (w2.get(6) == w1.get(2) && w2.get(2) != w3.get(6)) {
 						if (w3.get(2) == w4.get(6)) {
+							wise(w2, direction);
+							wise(w3, -direction);
+						} else {
+							wise(w2, direction);
+							wise(w3, -direction);
+							wise(w4, direction);
+						}
+					} else if (w2.get(6) != w1.get(2) && w2.get(2) != w3.get(6)) {
+						if (w3.get(2) == w4.get(6)) {
+							wise(w2, direction);
+							wise(w1, -direction);
+							wise(w3, -direction);
+						} else {
+							wise(w2, direction);
+							wise(w1, -direction);
+							wise(w3, -direction);
+							wise(w4, direction);
+						}
+
+					}
+
+				} else if (target == 3) {
+					if (w2.get(2) == w3.get(6) && w3.get(2) == w4.get(6)) {
+						wise(w3, direction);
+					} else if (w2.get(2) != w3.get(6) && w3.get(2) == w4.get(6)) {
+						if (w1.get(2) == w2.get(6)) {
+							wise(w2, -direction);
+							wise(w3, direction);
+						} else {
 							wise(w1, direction);
 							wise(w2, -direction);
 							wise(w3, direction);
+						}
+					} else if (w2.get(2) == w3.get(6) && w3.get(2) != w4.get(6)) {
+						wise(w3, direction);
+						wise(w4, -direction);
+					} else if (w2.get(2) != w3.get(6) && w3.get(2) != w4.get(6)) {
+						if (w1.get(2) == w2.get(6)) {
+							wise(w2, -direction);
+							wise(w3, direction);
+							wise(w4, -direction);
 						} else {
 							wise(w1, direction);
 							wise(w2, -direction);
 							wise(w3, direction);
 							wise(w4, -direction);
 						}
-
 					}
 
-				}
-			}
-
-			else if (target == 2) {
-				if (w2.get(6) == w1.get(2) && w2.get(2) == w3.get(6)) {
-					wise(w2, direction);
-				} else if (w2.get(6) != w1.get(2) && w2.get(2) == w3.get(6)) {
-					wise(w2, direction);
-					wise(w1, -direction);
-				} else if (w2.get(6) == w1.get(2) && w2.get(2) != w3.get(6)) {
-					if (w3.get(2) == w4.get(6)) {
-						wise(w2, direction);
-						wise(w3, -direction);
-					} else {
-						wise(w2, direction);
-						wise(w3, -direction);
+				} else if (target == 4) {
+					if (w4.get(6) == w3.get(2)) {
 						wise(w4, direction);
-					}
-				} else if (w2.get(6) != w1.get(2) && w2.get(2) != w3.get(6)) {
-					if (w3.get(2) == w4.get(6)) {
-						wise(w2, direction);
-						wise(w1, -direction);
-						wise(w3, -direction);
 					} else {
-						wise(w2, direction);
-						wise(w1, -direction);
-						wise(w3, -direction);
-						wise(w4, direction);
-					}
-
-				}
-
-			} else if (target == 3) {
-				if (w2.get(2) == w3.get(6) && w3.get(2) == w4.get(6)) {
-					wise(w3, direction);
-				} else if (w2.get(2) != w3.get(6) && w3.get(2) == w4.get(6)) {
-					if (w1.get(2) == w2.get(6)) {
-						wise(w2, -direction);
-						wise(w3, direction);
-					} else {
-						wise(w1, direction);
-						wise(w2, -direction);
-						wise(w3, direction);
-					}
-				} else if (w2.get(2) == w3.get(6) && w3.get(2) != w4.get(6)) {
-					wise(w3, direction);
-					wise(w4, -direction);
-				} else if (w2.get(2) != w3.get(6) && w3.get(2) != w4.get(6)) {
-					if (w1.get(2) == w2.get(6)) {
-						wise(w2, -direction);
-						wise(w3, direction);
-						wise(w4, -direction);
-					} else {
-						wise(w1, direction);
-						wise(w2, -direction);
-						wise(w3, direction);
-						wise(w4, -direction);
-					}
-				}
-
-			} else if (target == 4) {
-				if (w4.get(6) == w3.get(2)) {
-					wise(w4, direction);
-				} else {
-					if (w2.get(2) == w3.get(6)) {
-						wise(w4, direction);
-						wise(w3, -direction);
-					} else {
-						if (w1.get(2) == w2.get(6)) {
+						if (w2.get(2) == w3.get(6)) {
 							wise(w4, direction);
 							wise(w3, -direction);
-							wise(w2, direction);
 						} else {
-							wise(w4, direction);
-							wise(w3, -direction);
-							wise(w2, direction);
-							wise(w1, -direction);
+							if (w1.get(2) == w2.get(6)) {
+								wise(w4, direction);
+								wise(w3, -direction);
+								wise(w2, direction);
+							} else {
+								wise(w4, direction);
+								wise(w3, -direction);
+								wise(w2, direction);
+								wise(w1, -direction);
+							}
+
 						}
 
 					}
-
 				}
+
 			}
 
+			int sum = 0;
+			sum += w1.get(0) * 1;
+			sum += w2.get(0) * 2;
+			sum += w3.get(0) * 4;
+			sum += w4.get(0) * 8;
+
+			System.out.println("#" + tc + " " + sum);
+			tc++;
+
 		}
-
-		int sum = 0;
-		sum += w1.get(0) * 1;
-		sum += w2.get(0) * 2;
-		sum += w3.get(0) * 4;
-		sum += w4.get(0) * 8;
-
-		System.out.println(sum);
 	}
 }
